@@ -1,137 +1,105 @@
-(function () {
+$(document).ready(function () {
+  var isHeaderEnable = CONFIG.header && CONFIG.header.enable
+  var isShowHeaderOnPost = isHeaderEnable && CONFIG.header.showOnPost
+  // The previous distance from the page to the top.
+  var prevScrollTop = 0
+  var isNavFix = false
+  var isAnimation = true
 
-    /**
-     * @description 监听滚动高度，是否显示返回顶部
-     */
-    function myCustomFn(el) {
-        if (el.mcs.top < -600) {
-            if ($('#return-top').css('opacity') === '0') {
-                $('#return-top').velocity('stop').velocity({opacity: 1}, {
-                    duration: 500,
-                    display: 'block'
-                });
-            }
+  function headerNavScroll () {
+    var isPostPage = !!$('#is-post').length
+    var isNoHeader = !isHeaderEnable || (isPostPage && !isShowHeaderOnPost)
+    var $headerNav = $('.header-nav')
+    var scrollTop = Math.floor($(window).scrollTop())
+    var delta = Math.floor(scrollTop - prevScrollTop)
+
+    if (scrollTop === 0) {
+      if (isNoHeader) {
+        setTimeout(function () {
+          $headerNav.addClass('slider--clear')
+          isAnimation = false
+        }, 200)
+      }
+      $headerNav.removeClass('header-nav--sticky')
+      $headerNav.removeClass('slider--up')
+      $headerNav.addClass('slider--down')
+    } else {
+      if (isNoHeader && scrollTop < $headerNav.height()) {
+        return false
+      }
+
+      var MIN_SCROLL_TO_CHANGE_NAV = 5
+      // Make the state of nav bar not change due to tiny scrolling.
+      if (Math.abs(delta) > MIN_SCROLL_TO_CHANGE_NAV) {
+        if (isNoHeader) {
+          if (!isAnimation) {
+            isAnimation = true
+          } else {
+            $headerNav.removeClass('slider--clear')
+          }
+        }
+        if (!isNavFix) {
+          isNavFix = true
         } else {
-            $('#return-top').velocity('stop').velocity({opacity: 0}, {
-                duration: 500,
-                display: 'none'
-            });
+          $headerNav.addClass('header-nav--sticky')
         }
-    }
-
-    /**
-     * @description 阅读进度
-     * @param el
-     */
-    function readPercent(el) {
-        // console.log(el.mcs.content[0].offsetHeight);
-        let percent = Math.round(-el.mcs.top / (el.mcs.content[0].offsetHeight - el.offsetHeight) * 100);
-        $('.sidebar-toc-progress .progress-num').text(percent);
-        $('.sidebar-toc-progress-bar').velocity('stop').velocity({width: percent + '%'}, {
-            duration: 100,
-            easing: 'easeInOutQuart'
-        });
-    }
-
-    /**
-     * @description 滚动到页面顶部
-     */
-    $('#return-top').on('click', function () {
-        $('#content-outer').mCustomScrollbar('scrollTo', 'top', {
-            scrollInertia: 1000,
-            scrollEasing: 'easeInOut'
-        });
-    });
-
-    /**
-     * @description 滚动条修饰 - jquery 插件
-     */
-    $('#content-outer').mCustomScrollbar({
-        theme: 'minimal',
-        axis: 'y', // horizontal scrollbar
-        callbacks: {
-            whileScrolling: function () {
-                myCustomFn(this);
-                readPercent(this);
-                findHeadPosition(this);
-            },
-            onScroll: function () {
-
-            }
-        }
-    });
-    $('#sidebar-toc-content').mCustomScrollbar({
-        theme: 'minimal',
-        axis: 'y', // horizontal scrollbar
-        callbacks: {}
-    });
-
-    // $('figure.highlight').mCustomScrollbar({
-    //     theme: 'minimal',
-    //     axis: 'x', // horizontal scrollbar
-    //     mouseWheel: {
-    //         enable: false
-    //     },
-    //     callbacks: {}
-    // });
-
-    /**
-     * @description menu link scroll to content
-     */
-    $('.sidebar-toc-content .toc-link').on('click', function (e) {
-        e.preventDefault();
-        let _id = $(this).attr('href');
-        $('#content-outer').mCustomScrollbar('scrollTo', _id, {
-            scrollInertia: 500
-        });
-    });
-
-    /**
-     * @description 找到当前页面的位置，更改 active 目录
-     * @param el
-     */
-    function findHeadPosition(el) {
-        let currentId = '';
-        const menuHeight = $('#menu-outer').height() + 1;
-        // console.log(el.mcs);
-        let list = $('#post').find('h1,h2,h3,h4,h5,h6');
-        list.each(function () {
-            if ($(this).offset().top <= menuHeight) {
-                currentId = $(this).attr('id');
-            }
-        });
-        $('.sidebar-toc-content .toc-link').removeClass('active');
-        if (currentId === '') {
-            // currentId = list[0].id;
-            return;
-        }
-        let $this = $('.sidebar-toc-content .toc-link[href="#' + currentId + '"]');
-        $this.addClass('active');
-        let parents = $this.parents('.toc-child');
-        if (parents.length > 0) {
-            let child = null;
-            parents.length > 1 ? child = parents.eq(parents.length - 1).find('.toc-child') : child = parents;
-            if (child.length > 0 && child.is(':hidden')) {
-                expandToc(child);
-            }
-            parents.eq(parents.length - 1).closest('.toc-item').siblings('.toc-item').find('.toc-child').hide();
+        if (delta > 0) {
+          $headerNav.removeClass('slider--down')
+          $headerNav.addClass('slider--up')
         } else {
-            if ($this.closest('.toc-item').find('.toc-child').is(':hidden')) {
-                expandToc($this.closest('.toc-item').find('.toc-child'));
-            }
-            $this.closest('.toc-item').siblings('.toc-item').find('.toc-child').hide();
+          $headerNav.removeClass('slider--up')
+          $headerNav.addClass('slider--down')
         }
+      } else {
+        $headerNav.addClass('header-nav--sticky')
+      }
     }
+    prevScrollTop = scrollTop
+  }
 
-    /**
-     * @description expand toc-item
-     * @param $item
-     */
-    function expandToc($item) {
-        // $item.show();
-        $item.velocity('stop').velocity('fadeIn', {
-            duration: 500,
-            easing: 'easeInQuart'
-        });
+  var isBack2topEnable = CONFIG.back2top && CONFIG.back2top.enable
+  var isBack2topShow = false
+
+  // Back the page to top.
+  function back2top () {
+    var $back2top = $('#back2top')
+    var scrollTop = $(window).scrollTop()
+
+    if (scrollTop !== 0) {
+      if (!isBack2topShow) {
+        $back2top.addClass('back2top--show')
+        $back2top.removeClass('back2top--hide')
+        isBack2topShow = true
+      }
+    } else {
+      $back2top.addClass('back2top--hide')
+      $back2top.removeClass('back2top--show')
+      isBack2topShow = false
     }
-}());
+  }
+
+  if (isBack2topEnable) {
+    // Initializaiton
+    back2top()
+
+    $('#back2top').on('click', function () {
+      $('body')
+        .velocity('stop')
+        .velocity('scroll')
+    })
+  }
+
+  // Initializaiton
+  headerNavScroll()
+
+  $(window).on(
+    'scroll',
+    Stun.utils.throttle(function () {
+      headerNavScroll()
+
+      if (isBack2topEnable) {
+        back2top()
+      }
+    }, 100)
+  )
+})
