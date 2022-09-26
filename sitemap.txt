@@ -1,3 +1,4 @@
+http://example.com/2022/09/25/page-1/
 http://example.com/music/index.html
 http://example.com/2022/09/22/page/
 http://example.com/tags/index.html

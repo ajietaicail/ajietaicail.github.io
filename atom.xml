@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-09-22T08:37:31.733Z</updated>
+  <updated>2022-09-26T05:50:49.983Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>整型溢出</title>
+    <link href="http://example.com/2022/09/25/page-1/"/>
+    <id>http://example.com/2022/09/25/page-1/</id>
+    <published>2022-09-25T15:06:52.000Z</published>
+    <updated>2022-09-26T05:50:49.983Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>今天由于某些原因简单了解下整型溢出，在此简单整理下：</p><p>通常来说，整数溢出指的是整数达到其字节大小极限时的一种情况。</p><p>原理：</p><p>计算机中整数变量有上下界，如果在算术运算中出现越界，就会出现两类整数溢出。超出整数类型的最大表示范围，数字便会由一个极大值变为一个极小值或直接归零，这叫“上溢”； 超出整数类型的最小表示范围的话，数字便会由一个极小值或者零变成一个极大值，这叫做“下溢”。</p><p>而其后果轻则导致运算结果出错，重则导致内存被覆盖、缓冲区溢出、被黑客攻击、系统崩溃。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot; cla</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>面试。。。。</title>
