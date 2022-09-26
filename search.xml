@@ -8,20 +8,7 @@
       <link href="/2022/09/25/page-1/"/>
       <url>/2022/09/25/page-1/</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>今天由于某些原因简单了解下整型溢出，在此简单整理下：</p><p>通常来说，整数溢出指的是整数达到其字节大小极限时的一种情况。</p><p>原理：</p><p>计算机中整数变量有上下界，如果在算术运算中出现越界，就会出现两类整数溢出。超出整数类型的最大表示范围，数字便会由一个极大值变为一个极小值或直接归零，这叫“上溢”； 超出整数类型的最小表示范围的话，数字便会由一个极小值或者零变成一个极大值，这叫做“下溢”。</p><p>而其后果轻则导致运算结果出错，重则导致内存被覆盖、缓冲区溢出、被黑客攻击、系统崩溃。</p>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>面试。。。。</title>
-      <link href="/2022/09/22/page/"/>
-      <url>/2022/09/22/page/</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>  今天素拓面试，好家伙直接问我非洲卖暖气还是北极卖空调。。。。。直接转不过来了。唉，人都傻了。。。。。这就是素拓吗，唉。。。。。</p>]]></content>
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>今天由于某些原因简单了解下整型溢出，在此简单整理下：</p><p>通常来说，整数溢出指的是整数达到其字节大小极限时的一种情况。</p><p>原理：</p><p>计算机中整数变量有上下界，如果在算术运算中出现越界，就会出现两类整数溢出。超出整数类型的最大表示范围，数字便会由一个极大值变为一个极小值或直接归零，这叫“上溢”； 超出整数类型的最小表示范围的话，数字便会由一个极小值或者零变成一个极大值，这叫做“下溢”。</p><p>而其后果轻则导致运算结果出错，重则导致内存被覆盖、缓冲区溢出、被黑客攻击、系统崩溃。</p><p>（以上内容均取自网络）</p>]]></content>
       
       
       
