@@ -1,5 +1,6 @@
-http://example.com/2022/10/10/page-3/
-http://example.com/2022/10/10/page-2/
+http://example.com/2022/10/10/page-4/
+http://example.com/2022/10/05/page-3/
+http://example.com/2022/10/01/page-2/
 http://example.com/2022/09/26/page/
 http://example.com/2022/09/25/page-1/
 http://example.com/music/index.html
