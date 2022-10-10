@@ -4,6 +4,32 @@
   
     
     <entry>
+      <title>缓冲区溢出（摘录）</title>
+      <link href="/2022/10/10/page-3/"/>
+      <url>/2022/10/10/page-3/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>由于C/C++语言本身没有<a href="https://so.csdn.net/so/search?q=%E6%95%B0%E7%BB%84&spm=1001.2101.3001.7020">数组</a>越界检查机制，当向缓冲区里写入的数据超过了为其分配的大小时，就会发生缓冲区溢出。</p><p>Text段主要包含程序代码（一系列可执行的指令），另外还有一些只读的数据。通常操作系统标记该段为只读段，</p><p>如果有进程试图修改该段，会引发段错误。</p><p>Data段包括已初始化和未初始化的<a href="https://so.csdn.net/so/search?q=%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F&spm=1001.2101.3001.7020">全局变量</a>，静态变量也放于此处。该段的大小是在编译时期计算的。</p><p>紧接着Data段的一块内存是由堆和栈共享的区域。堆向下（高地址）增长，栈向上（低地址）增长。</p><p>堆中保存动态分配的数据，调用malloc函数或者calloc函数或者使用new操作符会在堆上分配内存。</p><p>栈中保存的是函数调用时传递的参数，局部变量的值和一些记录进程运行状态的寄存器的值。</p><p>堆和栈所占内存都是在运行期间分配的。如果进程的堆或栈的增长超出了为进程分配的内存大小，</p><p>那么该进程会被阻塞，操作系统重新为其分派一块更大的内存。</p><p><strong>栈的作用</strong></p><p>栈这种数据结构，我们再熟悉不过。它的特点是后进先出（LIFO），在它之上有两个著名的函数，push和pop。</p><p>函数是结构化程序设计最重要的技术。程序的执行过程可以看作是连续的函数调用。当一个函数执行完毕时，程序要回到调用</p><p>指令的下一条指令（紧接call指令）处继续执行，而栈的特点刚好适合这个条件。</p><p>在介绍函数调用的细节之前，我们先来看一下栈帧的概念。</p><p>栈帧是栈中的逻辑片段。每个函数调用时，都会push一个栈帧，当函数返回时，pop。</p><p>栈帧里面存放着函数的参数，函数局部变量以及为了恢复前一栈帧所需要的数据。</p><p> 我们知道，栈是实现相关的，不同架构的计算机，栈的增长方向和栈顶指针（ESP）的指向是不一样的。这篇文章里所讲的栈，</p><p>都是向低地址增长，栈顶指针是指向栈顶的。 由于ESP的值在程序执行过程中会频繁的改变，用到它的偏移量来定位变量会</p><p>很麻烦。因此，编译器使用另外一个寄存器EBP来记录执行时，首先把旧的EBP值压栈，然后把当前ESP值作为新的EBP值，接着</p><p>改变ESP值来为函数局部变量预留出空间。</p><p>转载：<a href="https://www.cnblogs.com/shilcare/archive/2010/12/23/1912987.html">缓冲区溢出攻击原理、方法及防范（一） -shilcare - 博客园 (cnblogs.com)</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>浅谈内存</title>
+      <link href="/2022/10/10/page-2/"/>
+      <url>/2022/10/10/page-2/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>1.内存(Memory)是<a href="https://baike.baidu.com/item/%E8%AE%A1%E7%AE%97%E6%9C%BA/140338?fromModule=lemma_inlink">计算机</a>的重要部件，也称<a href="https://baike.baidu.com/item/%E5%86%85%E5%AD%98%E5%82%A8%E5%99%A8/834392?fromModule=lemma_inlink">内存储器</a>和<a href="https://baike.baidu.com/item/%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8/10635399?fromModule=lemma_inlink">主存储器</a>，它用于暂时存放CPU中的运算数据，以及与<a href="https://baike.baidu.com/item/%E7%A1%AC%E7%9B%98/159825?fromModule=lemma_inlink">硬盘</a>等<a href="https://baike.baidu.com/item/%E5%A4%96%E9%83%A8%E5%AD%98%E5%82%A8%E5%99%A8/4843180?fromModule=lemma_inlink">外部存储器</a>交换的数据。它是<a href="https://baike.baidu.com/item/%E5%A4%96%E5%AD%98/2445612?fromModule=lemma_inlink">外存</a>与<a href="https://baike.baidu.com/item/CPU/120556?fromModule=lemma_inlink">CPU</a>进行沟通的桥梁，计算机中所有程序的运行都在内存中进行，内存性能的强弱影响计算机整体发挥的水平。只要计算机开始运行，<a href="https://baike.baidu.com/item/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/192?fromModule=lemma_inlink">操作系统</a>就会把需要运算的数据从内存调到CPU中进行运算，当运算完成，CPU将结果传送出来。</p><p>2.为了有效的使用内存，把内存划分成一个个小的内存单元，每个内存单元的大小是1个字节。</p><p>3.为了能够有效的访问即快速找到内存的每个单元，就给内存单元进行了编号，这些编号被称为该内存单元的地址。</p><p>4.内存分配：在C/C++中内存分为5个区，分别为栈区、堆区、全局/静态存储区、常量存储区、代码区。</p><p>静态内存分配:编译时分配。包括:全局、静态全局、静态局部三种变量。</p><p>动态内存分配:运行时分配。包括:栈(stack): 局部变量。堆(heap):c语言中用到的变量被动态的分配在内存中。(malloc或calloc、realloc、free函数)</p><ol start="5"><li>栈区（stack）：指那些由编译器在需要的时候分配，不需要时自动清除的变量所在的储存区，如函数执行时，函数的形参以及函数内的局部变量分配在栈区，函数运行结束后，形参和局部变量去栈（自动释放）。栈内存分配运算内置与处理器的指令集中，效率高但是分配的内存空间有限。</li></ol><p>堆区（heap）：指哪些由程序员手动分配释放的储存区，如果程序员不释放这块内存，内存将一直被占用，直到程序运行结束由系统自动收回，c语言中使用malloc，free申请和释放空间。</p><p>静态储存区（static）：全局变量和静态变量的储存是放在一块的，其中初始化的全局变量和静态变量在一个区域，这块空间当程序运行结束后由系统释放。</p><p>常量储存区（const）：常量字符串就是储存在这里的，如“ABC”字符串就储存在常量区，储存在常量区的只读不可写。const修饰的全局变量也储存在常量区，const修饰的局部变量依然在栈上。</p><p>程序代码区：存放源程序的二进制代码。</p><p>————————————————</p><p>版权声明：本文为CSDN博主「wy无语」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。</p><p>原文链接：<a href="https://blog.csdn.net/wy749929317/article/details/123729606">https://blog.csdn.net/wy749929317/article/details/123729606</a></p><p>————————————————</p><p>版权声明：本文为CSDN博主「wy无语」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。</p><p>原文链接：<a href="https://blog.csdn.net/wy749929317/article/details/123729606">C语言内存分配_wy无语的博客-CSDN博客_c语言内存分配</a></p><p>1取自百度百科</p><p>2，3取自博客园</p><p>其余取自csdn博主</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>博客的搭建</title>
       <link href="/2022/09/26/page/"/>
       <url>/2022/09/26/page/</url>
