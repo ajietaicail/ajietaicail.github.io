@@ -1,3 +1,4 @@
+http://example.com/2022/12/03/page-5/
 http://example.com/2022/10/10/page-4/
 http://example.com/2022/10/05/page-3/
 http://example.com/2022/10/01/page-2/
@@ -9,3 +10,4 @@ http://example.com/friends/index.html
 http://example.com/categories/index.html
 http://example.com/about/index.html
 http://example.com/
+http://example.com/tags/%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92/
