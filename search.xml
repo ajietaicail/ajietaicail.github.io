@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>pae</title>
+      <link href="/2022/12/03/page-6/"/>
+      <url>/2022/12/03/page-6/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在用指针进行排序时，</p><p>要注意交换的是值而不是指针。</p><p>如先定义a,b,c和*pa ,*pb,*pc令pa=a的地址，pb=b的地址，pc=c的地址,再定义一个常量作为中间变量。</p><p>#include &lt;stdio.h&gt;<br>lint main(） {<br>int a, b,c，<em>pa，</em>pb，*pc,p;</p><p>pa = &a;<br>pb = &b;</p><p>pc = &c;<br>printf(“请输入三个整数a, b,c\n”);</p><p>scanf(“%d%d%d”，&amp;a，&amp;b，&amp;c);</p><p>if (a&lt; b){<br>p = pa;</p><p>pa = pb;</p><p>pb = p;</p><p>}<br>if (a&lt; c){<br>p= pa;</p><p>pa = pc;</p><p>pc = p;</p><p>}<br>if (b &lt;c){<br>p = pb ;</p><p>pb = pc;</p><p>pc = p;</p><p>}<br>printf (“%d \t%d\t%d”，<em>pa，</em>pb,*pc);<br>return 0;</p><p>}</p><p>注意以上代码是错误的，不能正确排序，因为它只交换了指针，没有改变变量的值。因此我们应该交换的是<em>pa，</em>pb,*pc.</p><p>正确代码如下：</p><p>#include &lt;stdio.h&gt;<br>int main() {<br>    int a, b, c, * pa, * pb, * pc,x;<br>    pa = &a;<br>    pb = &b;<br>    pc = &c;<br>    printf(“请输入三个整数a b c\n”);<br>    scanf(“%d %d %d”,&amp; a,&amp; b,&amp; c);<br>    if (*pa &lt; *pb) {<br>        x = *pa;<br>        *pa = *pb;<br>        *pb = x;<br>    }<br>    if (*pa &lt; *pc) {<br>        x = *pa;<br>        *pa = *pc;<br>        *pc = x;<br>    }<br>    if (*pb &lt; *pc) {<br>        x = *pb;<br>        *pb = *pc;<br>        *pc = x;<br>    }<br>    printf(“%d\t%d\t%d”, *pa, *pb, *pc);</p><p>return 0;</p><p>}</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>page</title>
       <link href="/2022/12/03/page-5/"/>
       <url>/2022/12/03/page-5/</url>
@@ -11,12 +24,6 @@
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>代码如下</p><p>#define     _CRT_SECURE_NO_WARNINGS<br>#include &lt;stdio.h&gt;<br>int main() {<br>    int i, j, n, a[50][50];<br>    scanf(“%d”, &amp;n);<br>    for (i = 0; i &lt; n; i++) {<br>        a[i][i] = 1;<br>        a[i][0] = 1;<br>    }<br>    for (i = 2; i &lt; n; i++) {<br>            for (j = 1; j &lt;i; j++)<br>                a[i][j] = a[i - 1][j - 1] + a[i - 1][j];<br>    }<br>    for (i = 0; i &lt; n; i++) {<br>        for (j = 0; j &lt;=i; j++)<br>            printf(“%5d”, a[i][j]);<br>        printf(“\n”);<br>    }<br>    return 0;<br>}</p><p>另一种形式如下</p><p>#include &lt;stdio.h&gt;<br>int main() {<br>    int i, j, n, a[50][50]={0};<br>    scanf(“%d”, &amp;n);<br>    for (i = 0; i &lt; n; i++) {<br>        a[i][i] = 1;<br>        a[i][0] = 1;<br>    }<br>    for (i = 2; i &lt; n; i++) {<br>            for (j = 1; j &lt;=i; j++)<br>                a[i][j] = a[i - 1][j - 1] + a[i - 1][j];<br>    }<br>    for (i = 0; i &lt; n; i++) {<br>        for (j = 0; j &lt;=i; j++)<br>            printf(“%5d”, a[i][j]);<br>        printf(“\n”);<br>    }<br>    return 0;<br>}</p><p>可见第二段代码与第一段代码的区别在于输入的for循环的j是小于等于i而第一个是小于i，这样的话，第二段代码便要对数组进行初始化，否则会出现差错。</p><p>对程序分析可知</p><p>从全局来看可以发现第n行共有n个元素。我们首先对每一行的第一个位置和最后一个位置赋予值1，由于第二行是1 ，1，故从第三行对代码的规律进行总结。可以发现第三行开始，每一行的第二个元素到第n-1个元素的每一个元素都是上一行对应位置元素和上一行对应位置元素的左边一个元素之和.</p><p>1</p><p>1  1</p><p>1  2  1</p><p>1  3  3  1</p><p>1  4  6  4  1</p><p>故从第三行开始我们代码每一行都只需对第二个元素到倒数第二个元素进行分析输出，第一段代码无需初始化是因为j的输出只到了i-1的位置就是如上所说。而第二段代码到了i的位置，也就是对每一行最后一个值1又进行了输出覆盖了原来的值1，此时第三行最后一个元素的值会对于第二行第三个元素的值加上1，如果不初始化数组令其等于0，由于第二行第三个元素的值未定所以最后结果便会出错。若初始化令其为0，则由于0+1=1保证了每一行最后一个仍是1，所以使得程序正常输出。</p><p>，</p>]]></content>
       
       
-      
-        <tags>
-            
-            <tag> 杨辉三角 </tag>
-            
-        </tags>
       
     </entry>
     
