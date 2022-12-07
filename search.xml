@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>简单排序法的小误区</title>
+      <link href="/2022/12/07/page-7/"/>
+      <url>/2022/12/07/page-7/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在运用简单排序法时经常一不小心在一个地方出错，在此稍作记录。</p><p>如以下程序————给国家名排序</p><p>#include&lt;stdio.h&gt;<br>#include&lt;string.h&gt;<br>void sort(char x[][10], int n) {<br>    int i,j;<br>    char t[10];<br>    for (i = 0; i &lt; n; i++) {<br>        for(j=i+1;j&lt;n;j++)<br>            if (strcmp(x[i], x[j])&gt;0) {<br>                strcpy(t,x[j]);<br>                strcpy(x[j],x[i]);<br>                strcpy(x[i],t);<br>            }<br>        printf(“%s\n”, x[i]);<br>    }</p><p>}<br>int main() {<br>    char x[10][10];<br>    int i,n;<br>    printf(“你输入的国家个数为：”);<br>    scanf(“%d”, &amp;n);<br>    printf(“它们的名字为：\n”);<br>    for (i = 0; i &lt; n; i++)<br>        scanf(“%s”, x[i]);<br>    printf(“排序后它们为：\n”);<br>        sort(x, n);<br>    return 0;<br>}</p><p>在自定义的排序函数sort中运用了简单排序法对输入的国家名进行排序，但要注意在内循环中j的初始值是i+1不是1，不然会令前几轮已经排序好的最小的国家名重新参与排序，造成结果出错。</p><p>若输入的值n=6</p><p>输入国家名为：a c b d e g</p><p>正确的结果应该是: a b c d e g</p><p>但若令j=1</p><p>输出的结果会是：</p><p>a b b b b b </p><p>这是因为在自定义函数sort中printf(“%s\n”, x[i])输出的是每一轮排序得出的最小值（对应字母ascall码值最小的国家名）</p><p>此时将printf移至for循环外输出，则可得到此时排完序后的国家名为： a g e d c b </p><p>即</p><p>将void sort(char x[][10], int n) {<br>    int i,j;<br>    char t[10];<br>    for (i = 0; i &lt; n; i++) {<br>        for(j=i+1;j&lt;n;j++)<br>            if (strcmp(x[i], x[j])&gt;0) {<br>                strcpy(t,x[j]);<br>                strcpy(x[j],x[i]);<br>                strcpy(x[i],t);<br>            }<br>        printf(“%s\n”, x[i]);<br>    }</p><p>}</p><p>改为</p><p>void sort(char x[][10], int n) {<br>    int i,j;<br>    char t[10];<br>    for (i = 0; i &lt; n; i++) {<br>        for(j=i+1;j&lt;n;j++)<br>            if (strcmp(x[i], x[j])&gt;0) {<br>                strcpy(t,x[j]);<br>                strcpy(x[j],x[i]);<br>                strcpy(x[i],t);<br>             }</p><p>}</p><p><strong>for(i=0;i&lt;n;i++)</strong></p><p><strong>printf(“%s”,x[i]);</strong></p><p>}</p><p>附录：</p><p>每一轮排序：</p><ol><li><p>a c b d e g</p></li><li><p>a b c d e g</p></li><li><p>a c b d e g</p></li><li><p>a d c b e g</p></li><li><p>a e d c b g</p></li><li><p>a g e d c b</p></li></ol>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>排序</title>
       <link href="/2022/12/03/page-6/"/>
       <url>/2022/12/03/page-6/</url>
