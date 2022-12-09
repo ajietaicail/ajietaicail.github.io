@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>数组元素移位</title>
+      <link href="/2022/12/09/page-8/"/>
+      <url>/2022/12/09/page-8/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>题目如下：有n个整数，使前面各数顺序向后移m个位置，最后m个数变成最前面m个数，试编写一函数void move(int a[],int n,int m)实现以上功能，在main函数中输入n个数和m的值，调用move函数后，输出调整后的n个数。</p><p>对于自定义函数我的想法是，在自定义函数中再定义一个数组，令该数组的元素完全等于a数组元素，再通过该数组对a数组进行移位。</p><p>代码如下：</p><p>#include &lt;stdio.h&gt;<br>void move(int a[], int n, int m) {<br>    int i,p[20];<br>    for (i = 0; i &lt; n; i++)<br>        p[i] = a[i];<br>    for (i = 0; i &lt; n; i++)<br>        if ((i + m) &lt; n)<br>            a[i + m] = p[i];<br>        else<br>            a[i + m - n] = p[i];<br>}<br>int main() {<br>    int m, n,a[20],i;<br>    printf(“输入的整数的个数为：”);<br>    scanf(“%d”, &amp;n);<br>    printf(“向后移动的个数为：”);<br>    scanf(“%d”, &amp;m);<br>    printf(“请输入整数：”);<br>    for (i = 0; i &lt; n; i++)<br>        scanf(“%d”,&amp; a[i]);<br>    move(a, n, m);<br>    printf(“移动后的整数顺序为：\n”);<br>    for (i = 0; i &lt; n; i++)<br>        printf(“%3d”, a[i]);</p><p>    return 0;<br>}</p><p>而答案的想法是先将数组最后面的元素的值存入中间变量里，再令其余元素都前移1个位置，再将最末尾元素的值插入第一个位置，如此重复m次，得到移动m个位置的数组。</p><p>代码如下：</p><p>#include&lt;stdio.h&gt;<br>#define N 100<br>void move(int a[],int n,int m)<br>{<br>int i,j,t;<br>for (i = 1; i &lt;=m; i++)<br>{<br>t=a[n-1];<br>for(j=n-1;j&gt;0;j–)<br>a[j]=a[j-1];<br>a[0]=t;<br>}<br>}<br>int main()<br>{<br>int a[N],i,n,m;<br>printf(“Please input n:”);<br>scanf(“%d”, &amp;n);<br>printf(“Please input %d data:”,n);<br>for(i=0;i&lt;n;i++)<br>scanf(“%d”, &amp;a[i]);<br>printf(“Please input m:”);<br>scanf(“%d”, &amp;m);<br>move(a,n,m);<br>for (i = 0; i &lt; n; i++)<br>{<br>printf(“%d “, a[i]);<br>}<br>return 0;<br>}</p><p>显然，答案的代码不用再定义一个数组，方法更优，在此记录一下</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>简单排序法的小误区</title>
       <link href="/2022/12/07/page-7/"/>
       <url>/2022/12/07/page-7/</url>
